@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cp ./target/novaordis-crypto-provider-1.0.jar ${JBOSS_HOME}/common/lib && echo "ok"
+

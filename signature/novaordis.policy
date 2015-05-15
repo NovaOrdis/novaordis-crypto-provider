@@ -1,0 +1,11 @@
+
+keystore "file:///Users/ovidiu/src/playground/java/security/custom-cryptographic-services-provider/signature/truststore.jks", "JKS";
+keystorePasswordURL "file:///Users/ovidiu/src/playground/java/security/custom-cryptographic-services-provider/signature/truststore-password-in-clear.txt";
+
+grant signedBy "novaordis", codeBase "file:/*", {
+  permission java.security.AllPermission;
+};
+
+grant {
+  permission java.security.AllPermission;
+};

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#(cd $(dirname $0)/../../../; mvn clean package)
+
+DEBUG_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
+
+function get_classpath()
+{
+    local jar_name=novaordis-crypto-provider-1.0.jar
+    local provider_jar=$(dirname $0)/../../../target/${jar_name}
+    [ -f ${provider_jar} ] || { echo "${provider_jar} does not exist, build it and try again" 1>&2; exit 1; }
+
+    echo "${M2}/log4j/log4j/1.2.17/log4j-1.2.17.jar:${provider_jar}"
+}
+
+classpath=$(get_classpath) || exit 1
+
+#${signed_jar} && CODE_SIGNATURE_OPTIONS="-Djava.security.manager -Djava.security.policy==$(dirname $0)/../../../signature/novaordis.policy "
+
+#SECURITY_DEBUG=-Djava.security.debug=jar
+
+java ${DEBUG_OPTS} ${SECURITY_DEBUG} -Djava.security.manager -Djava.security.policy==$(dirname $0)/../../../signature/novaordis.policy -cp ${classpath} com.novaordis.security.Main
